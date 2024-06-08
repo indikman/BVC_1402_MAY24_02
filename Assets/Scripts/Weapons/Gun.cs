@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour
 	Transform firePoint;
 	
 	[SerializeField]
-	Bullet bulletPrefab;
+	string bulletPoolName;
 	
 	[SerializeField]
 	float bulletForce = 15f;
@@ -16,7 +16,10 @@ public class Gun : MonoBehaviour
 	
 	public virtual void Shoot(Vector2 additionalVelocity = new Vector2())
 	{
-		Bullet bullet = Instantiate<Bullet>(bulletPrefab, firePoint);
+		// here, we will be using the pool manager instead of instantiate
+		// Bullet bullet = Instantiate<Bullet>(bulletPrefab, firePoint);
+		Bullet bullet = (Bullet)PoolManager.Instance.Spawn(bulletPoolName);
+		
 		bullet.transform.position = firePoint.transform.position;
 		bullet.transform.rotation = firePoint.transform.rotation;
 		
